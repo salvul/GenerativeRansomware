@@ -3,11 +3,10 @@
 # 1 Introduzione
 Il presente workshop è stato progettato per introdurti alla Generative AI e per sensibilizzarti su come utenti malintenzionati potrebbero utilizzare questo strumento per scopi malevoli. Attraverso una serie di esercizi pratici, esploreremo come utilizzare la Generative AI per simulare la creazione e l'esecuzione di un ransowmare. Ciascun esercizio è stato strutturato per potenziare la comprensione e le abilità pratiche nel prompt engineering. Questa simulazione verrà eseguita attraverso l'utilizzo del modello di OpenAI ed il framework LangChain.
 
-##1.3 Obiettivi
+## 1.3 Obiettivi
 Al termine di questo workshop, l'utente sarà in grado di comprendere il funzionamento dei ransomware e simulare le loro funzioni principali per scopi educativi. Questo utilizzando esclusivamente la Generative AI, senza scrivere direttamente il codice. L'obiettivo è aumentare la consapevolezza sulla sicurezza informatica e promuovere la difesa contro minacce informatiche.
 
-##1.4 Disclaimer
-Trivellini, Lelio
+## 1.4 Disclaimer
 Le conoscenze condivise in questo workshop sono da intendersi esclusivamente per scopi educativi. L'uso delle tecniche presentate fuori da un contesto di apprendimento può costituire una violazione delle leggi vigenti e avere gravi conseguenze legali. Incoraggiamo sempre ad adottare un approccio responsabile ed etico all'utilizzo della GenAI, per costruire un futuro digitale più sicuro e consapevole.
 
 Per la realizzazione di questo notebook è stato utilizzato il più recente modello GPT-4 Turbo, i cui Training Data risalgono fino a dicembre 2023 e consente una finestra di contesto fino a 128.000 token. Si prega di notare che l'utilizzo di un modello alternativo e/o con prestazioni differenti potrebbe non garantire gli stessi risultati. Si specifica che alla prima registrazione, OpenAI offre all'utente 5$ in omaggio utilizzabili per il modello GPT3.5 (gpt-3.5-turbo). Gli stessi sono sufficienti per eseguire il workshop, ma non garantiscono le stesse prestazioni.
@@ -74,18 +73,18 @@ Sarà necessario disabilitare i criteri di restrizione di PowerShell ed impostar
 - digita ```Set-ExecutionPolicy Unrestricted```
 - digita ```s```
 
-##3.5 Installazione dei pacchetti python
+## 3.5 Installazione dei pacchetti python
 Una volta installato Python e configurato un ambiente virtuale, è possibile installare le librerie necessarie.
 
 Questo notebook richiede l'installazione di diversi pacchetti Python, tra cui:
 
-openai fornisce un comodo accesso all'API OpenAI, consentendo di utilizzare le funzionalità offerte dalla piattaforma OpenAI.
-langchain è una libreria che semplifica la creazione di applicazioni basate su LLM.
-langchain-openai è un'estensione del pacchetto LangChain che integra specificamente le funzionalità di OpenAI.
-ipykernel pacchetto Python che fornisce il kernel per Jupyter, permettendo a Jupyter Notebook / JupyterLab o Visual Studio di eseguire codice Python.
-pyftpdlib Una libreria Python per creare server FTP facilmente.
-cryptography Un pacchetto Python per crittografia e sicurezza dei dati.
-tk Toolkit GUI di Python per creare interfacce utente grafiche.
+- **openai** fornisce un comodo accesso all'API OpenAI, consentendo di utilizzare le funzionalità offerte dalla piattaforma OpenAI.
+- **langchain** è una libreria che semplifica la creazione di applicazioni basate su LLM.
+- **langchain-openai** è un'estensione del pacchetto LangChain che integra specificamente le funzionalità di OpenAI.
+- **ipykernel** pacchetto Python che fornisce il kernel per Jupyter, permettendo a Jupyter Notebook / JupyterLab o Visual Studio di eseguire codice Python.
+- **pyftpdlib** Una libreria Python per creare server FTP facilmente.
+- **cryptography** Un pacchetto Python per crittografia e sicurezza dei dati.
+- **tk** Toolkit GUI di Python per creare interfacce utente grafiche.
 Si prega di eseguire da terminale (in ambiente virtuale) il comando sottostante. Esso, contiene i comandi essenziali per l'installazione di tutti i pacchetti Python necessari per eseguire il notebook in modo corretto. Questo passaggio è fondamentale per l'esecuzione di qualsiasi altra parte del notebook.
 
 ```pip install openai langchain langchain-openai ipykernel pyftpdlib cryptography tk```
@@ -95,13 +94,8 @@ Si prega di eseguire da terminale (in ambiente virtuale) il comando sottostante.
 ## 3.6 Creazione file target
 Assicurarsi di creare i file target per l'esercizio del workbook. Il progetto viene già fornito con dei file di esempio. Il seguente codice permette di rigenerare i file in caso di errore.
 
-%run ./Utilities/Folder_Generator.py    # reset cartelle
-Inizializzazione ambiente ...
-Cartella 'Documents' e il suo contenuto sono stati cancellati.
-Cartella 'Documents' creata con successo.
-File 'wallet_bitcoin.txt' creato con successo.
-File 'employees_personal_info.rtf' creato con successo.
-Contenuto della cartella 'Malicious_Server' pulito.
+```%run ./Utilities/Folder_Generator.py    # reset cartelle```
+
 
 ## 3.7 Creazione funzione di test
 Utilizza la funzione successiva per copiare direttamente il codice generato dall'LLM in un file Python denominato 'Ransomware.py'. Il codice Python generato dall'LLM di solito si trova tra tag specifici, per cui assicurati di salvare solo il codice rilevante per l'esecuzione del programma. Utilizzeremo tale funzione per testare i risultati generate dagli esercizi nel seguito.
@@ -116,15 +110,16 @@ def create_ransom(response):
 
     with open(os.path.join(target_folder, "Ransomware.py"), "w") as file:
         text = response["text"]
-        if "\```python" in text and "\```" in text:
-            start_index = text.index("\```python") + len("\```python")
-            end_index = text.index("\```", start_index)
+        if "```python" in text and "```" in text:
+            start_index = text.index("```python") + len("```python")
+            end_index = text.index("```", start_index)
             python_code = text[start_index:end_index].strip()
             file.write(python_code + "\n")
         else:
             file.write(text + "\n")
     
-    return True```
+    return True
+```
 
 ## 3.8 Avvio server C2
 Per simulare un sistema di Command & Control, per questo workshop è stato predisposto un file Python chiamato 'Server.py' all'interno della cartella 'Malicious_Server'. Questo script:
@@ -133,7 +128,7 @@ istanzia un Server FTP in ascolto sull'indirizzo IP locale 127.0.0.1 e sulla por
 configura all'interno del Server un'utenza con username 'user' e password 'pass'.
 Puoi utilizzare il seguente codice per attivare il Server FTP in un nuovo terminale e assicurati di lasciarlo in esecuzione per l'intera durata del notebook. Se il server viene chiuso accidentalmente, basta rieseguire questo codice per riattivarlo.
 
-import platform, subprocess, sys
+```import platform, subprocess, sys
 
 file_path = "./Malicious_Server/Server.py"
  
@@ -143,3 +138,4 @@ elif platform.system() == "Linux":
     subprocess.Popen(["gnome-terminal", "--", sys.executable, file_path])
 elif platform.system() == "Darwin":  # macOS
     subprocess.Popen(["open", "-a", "Terminal.app", sys.executable, file_path])
+```
