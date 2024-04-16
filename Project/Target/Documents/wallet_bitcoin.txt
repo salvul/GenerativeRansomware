@@ -1,0 +1,11 @@
+Indirizzo del Wallet Bitcoin: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+Chiave Privata del Wallet Bitcoin: L5LbsX8MNwSxu92V4TUDqb6B7zmWcjJ9UwhqykxSPGEGHb4NHM2S
+Wallet Bitcoin:
+
+Indirizzo: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+Chiave privata: 5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF
+
+Bilancio Bitcoin: 2.5 BTC
+Transazioni recenti:
+- 2023-03-21: Ricevuto 1.0 BTC da 1Mz7153HMuxXTuR2R1t78mGSdzaAtNbBWX
+- 2023-03-22: Inviato 0.5 BTC a 1Q2TWHE3GMdB6BZKafqwxXtWAWgFt5Jvm3
