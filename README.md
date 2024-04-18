@@ -3,10 +3,10 @@
 # 1 Introduzione
 Il presente workshop è stato progettato per introdurti alla Generative AI e per sensibilizzarti su come utenti malintenzionati potrebbero utilizzare questo strumento per scopi malevoli. Attraverso una serie di esercizi pratici, esploreremo come utilizzare la Generative AI per simulare la creazione e l'esecuzione di un ransowmare. Ciascun esercizio è stato strutturato per potenziare la comprensione e le abilità pratiche nel prompt engineering. Questa simulazione verrà eseguita attraverso l'utilizzo del modello di OpenAI ed il framework LangChain.
 
-## 1.3 Obiettivi
+## 1.1 Obiettivi
 Al termine di questo workshop, l'utente sarà in grado di comprendere il funzionamento dei ransomware e simulare le loro funzioni principali per scopi educativi. Questo utilizzando esclusivamente la Generative AI, senza scrivere direttamente il codice. L'obiettivo è aumentare la consapevolezza sulla sicurezza informatica e promuovere la difesa contro minacce informatiche.
 
-## 1.4 Disclaimer
+## 1.2 Disclaimer
 Le conoscenze condivise in questo workshop sono da intendersi esclusivamente per scopi educativi. L'uso delle tecniche presentate fuori da un contesto di apprendimento può costituire una violazione delle leggi vigenti e avere gravi conseguenze legali. Incoraggiamo sempre ad adottare un approccio responsabile ed etico all'utilizzo della GenAI, per costruire un futuro digitale più sicuro e consapevole.
 
 Per la realizzazione di questo notebook è stato utilizzato il più recente modello GPT-4 Turbo, i cui Training Data risalgono fino a dicembre 2023 e consente una finestra di contesto fino a 128.000 token. Si prega di notare che l'utilizzo di un modello alternativo e/o con prestazioni differenti potrebbe non garantire gli stessi risultati. Si specifica che alla prima registrazione, OpenAI offre all'utente 5$ in omaggio utilizzabili per il modello GPT3.5 (gpt-3.5-turbo). Gli stessi sono sufficienti per eseguire il workshop, ma non garantiscono le stesse prestazioni.
@@ -82,12 +82,13 @@ Questo notebook richiede l'installazione di diversi pacchetti Python, tra cui:
 - **langchain** è una libreria che semplifica la creazione di applicazioni basate su LLM.
 - **langchain-openai** è un'estensione del pacchetto LangChain che integra specificamente le funzionalità di OpenAI.
 - **ipykernel** pacchetto Python che fornisce il kernel per Jupyter, permettendo a Jupyter Notebook / JupyterLab o Visual Studio di eseguire codice Python.
+- **pyzmq** dipendenza di ipykernel che ti consente di creare la tua infrastruttura di messaggistica.
 - **pyftpdlib** Una libreria Python per creare server FTP facilmente.
 - **cryptography** Un pacchetto Python per crittografia e sicurezza dei dati.
 - **tk** Toolkit GUI di Python per creare interfacce utente grafiche.
 Si prega di eseguire da terminale (in ambiente virtuale) il comando sottostante. Esso, contiene i comandi essenziali per l'installazione di tutti i pacchetti Python necessari per eseguire il notebook in modo corretto. Questo passaggio è fondamentale per l'esecuzione di qualsiasi altra parte del notebook.
 
-```pip install openai langchain langchain-openai ipykernel pyftpdlib cryptography tk```
+```pip install openai langchain langchain-openai ipykernel==6.29.3 pyzmq==25.1.2 pyftpdlib cryptography tk```
 
 **N.B.**: Visual studio potrebbe richiedere di installare dipendenze suggerite. Inoltre, alla richiesta di selezione del Kernel, fare click su Python Evironments e successivamente selezionare il virtual enviroment precedentemente nominato venv
 
