@@ -60,7 +60,7 @@ Creazione ambiente virtuale (fornisce uno spazio di lavoro pulito per l'installa
 - ```Terminal -> New Terminal```
 - ```python -m venv venv```
 - ```.\\venv\Scripts\activate```
-- 
+
 ### 3.4.1 Troubleshooting
 Qualora riscontrassi errori del tipo:
 
